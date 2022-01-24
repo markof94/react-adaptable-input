@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import isStringEmpty from './util/isStringEmpty';
 
 const Container = styled.div`
   position: relative;
   width: 100%;
 `;
 
-const Input = styled.textarea`
+const Input = styled.input`
   position: relative;
   outline: none;
   width: 100%;
@@ -23,14 +24,16 @@ const Input = styled.textarea`
   color: #000000;
   padding: 12px;
   padding-left: 14px;
+  padding-top: 28px;
   background: transparent;
+  transition: all 0.2s ease;
 
   &::placeholder{
     color: #999999;
   }
 
-  ${({ $invalid }) => $invalid && `
-    border-color: #F44336;
+  ${({ invalid }) => invalid && `
+      border-color: #F44336;
   `}
 
   ${({ $isfocused }) => $isfocused && `
@@ -41,46 +44,61 @@ const Input = styled.textarea`
     border-radius: ${borderradius}px;
   `}
 
-  ${({ $haspersistentlabel }) => $haspersistentlabel && `
-    padding-top: 23px;
-  `}
+  ${({ $hastext, $hasplaceholder, $haspersistentlabel }) => {
+    if (
+      ($haspersistentlabel && !$hasplaceholder && !$hastext) ||
+      (!$haspersistentlabel && $hasplaceholder && $hastext) ||
+      (!$haspersistentlabel && !$hasplaceholder) ||
+      (!$haspersistentlabel && !$hastext)
+    ) {
+      return 'padding-top: 12px;';
+    }
 
-  ${({ $haspersistentlabel, $hasplaceholder, $hastext }) => $haspersistentlabel && !$hasplaceholder && !$hastext && `
-    padding-top: 12px;
-    padding-bottom: 23px;
-  `}
+    return '';
+  }}
 `;
 
 const PersistentLabel = styled.div`
   position: absolute;
   width: calc(100% - 20px);
   left: 1px;
-  top: 1px;
+  top: calc(50% - 1px);
   padding-left: 14px;
-  padding-top: 5px;
+  padding-top: 2px;
   padding-bottom: 2px;
-  font-size: 12px;
-  line-height: 18px;
-  letter-spacing: -0.41px;
+  transform: translateY(-50%);
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 21px;
   color: #4F4F4F;
   pointer-events: none;
-  transition: padding 0.2s ease, font-size 0.2s ease;
-
-  ${({ isFocused }) => isFocused && `
-    color: #007AFF;
-  `}
+  transition: all 0.2s ease;
 
   ${({ isInvalid }) => isInvalid && `
     color: #F44336;
   `}
 
-  ${({ hasPlaceholder, hasText }) => !hasPlaceholder && !hasText && `
-    padding: 12px;
-    padding-left: 14px;
+  ${({ hasText, hasPlaceholder }) => !hasPlaceholder && !hasText && `
     color: #999999;
-    font-size: 17px;
-    line-height: 21px;
-    letter-spacing: -0.41px;
+  `}
+
+  ${({ hasText, hasPlaceholder }) => (hasText || hasPlaceholder) ? `
+    left: 1px;
+    top: 1px;
+    padding-left: 14px;
+    padding-top: 5px;
+    padding-bottom: 2px;
+    transform: translateY(0);
+    font-size: 12px;
+    line-height: 18px;
+  ` : `
+    color: #999999;
+  `}
+
+  ${({ hasText, hasPlaceholder, isFocused }) => (hasText || hasPlaceholder) && isFocused && `
+    color: #007AFF;
   `}
 `;
 
@@ -98,11 +116,11 @@ const CharacterCounter = styled.div`
     transition: all 0.15s ease;
 
     ${({ isInvalid }) => isInvalid && `
-        color: #F44336;
+      color: #F44336;
     `}
 
     ${({ isVisible }) => isVisible && `
-        opacity: 1;
+      opacity: 1;
     `}
 `;
 
@@ -116,7 +134,7 @@ const InputError = styled.div`
   margin-left: 13px;
 `;
 
-const Textarea = (props) => {
+const TextInput = (props) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const {
@@ -128,7 +146,6 @@ const Textarea = (props) => {
     errorLabel,
     borderRadius = 10,
     type,
-    rowsMin,
   } = props;
 
   const isExceedingMaxLength = maxLength ? value.length > maxLength : false;
@@ -146,29 +163,28 @@ const Textarea = (props) => {
         placeholder={placeholder}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        $invalid={(isExceedingMaxLength || isInvalid)}
+        invalid={(isExceedingMaxLength || isInvalid)}
         $isfocused={isFocused}
         borderradius={borderRadius}
+        $hastext={value !== ''}
         type={type}
         autoCapitalize="none"
         $haspersistentlabel={hasPersistentLabel}
         $hasplaceholder={hasPlaceholder}
-        $hastext={value !== ''}
         maxLength={maxLength}
-        rowsMin={rowsMin}
       />
-
-      {hasPersistentLabel && (
-        <PersistentLabel
-          isInvalid={isExceedingMaxLength || isInvalid}
-          isFocused={isFocused}
-          hasText={value !== ''}
-          hasPlaceholder={hasPlaceholder}
-        >
-          {persistentLabel}
-        </PersistentLabel>
-
-      )}
+      {
+        hasPersistentLabel && (
+          <PersistentLabel
+            isInvalid={isExceedingMaxLength || isInvalid}
+            isFocused={isFocused}
+            hasText={value !== ''}
+            hasPlaceholder={hasPlaceholder}
+          >
+            {persistentLabel}
+          </PersistentLabel>
+        )
+      }
 
       {maxLength && (
         <CharacterCounter
@@ -187,7 +203,7 @@ const Textarea = (props) => {
   );
 };
 
-Textarea.propTypes = {
+TextInput.propTypes = {
   persistentLabel: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
@@ -196,7 +212,6 @@ Textarea.propTypes = {
   errorLabel: PropTypes.string,
   borderRadius: PropTypes.number,
   type: PropTypes.string,
-  rowsMin: PropTypes.number,
 };
 
-export default Textarea;
+export default TextInput;

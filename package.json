@@ -1,10 +1,11 @@
 {
   "name": "react-adaptable-input",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "A set of customizable input components which support persistent labels, character counters and error labels.",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files"
   },
   "keywords": [
     "react",
@@ -18,5 +19,27 @@
     "placeholder"
   ],
   "author": "Marko Fajler",
-  "license": "ISC"
+  "type": "module",
+  "license": "ISC",
+  "module": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/markof94/react-adaptable-input.git"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.8",
+    "@babel/core": "^7.16.12",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7"
+  }
 }

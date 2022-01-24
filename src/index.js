@@ -1,7 +1,5 @@
-import TextInput from './Inputs/TextInput';
-import Textarea from './Inputs/Textarea';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./examples/App";
 
-module.exports = {
-  TextInput,
-  Textarea,
-};
+ReactDOM.render(<App />, document.getElementById("root"));
