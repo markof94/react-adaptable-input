@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import isStringEmpty from './util/isStringEmpty';
+import isStringEmpty from '../util/isStringEmpty';
 
 const Container = styled.div`
   position: relative;

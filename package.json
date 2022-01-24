@@ -1,45 +1,39 @@
 {
   "name": "react-adaptable-input",
-  "version": "0.0.5",
-  "description": "A set of customizable input components which support persistent labels, character counters and error labels.",
-  "main": "dist/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files"
-  },
-  "keywords": [
-    "react",
-    "input",
-    "adaptable",
-    "textarea",
-    "textinput",
-    "number",
-    "form",
-    "label",
-    "placeholder"
-  ],
-  "author": "Marko Fajler",
-  "type": "module",
-  "license": "ISC",
-  "module": "dist/index.js",
-  "files": [
-    "dist",
-    "README.md"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/markof94/react-adaptable-input.git"
-  },
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "styled-components": "^5.3.3"
+    "react-scripts": "5.0.0",
+    "styled-components": "^5.3.3",
+    "web-vitals": "^2.1.4"
   },
-  "devDependencies": {
-    "@babel/cli": "^7.16.8",
-    "@babel/core": "^7.16.12",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-react": "^7.16.7"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
