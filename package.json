@@ -1,0 +1,22 @@
+{
+  "name": "react-adaptable-input",
+  "version": "0.0.1",
+  "description": "A set of customizable input components which support persistent labels, character counters and error labels.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "input",
+    "adaptable",
+    "textarea",
+    "textinput",
+    "number",
+    "form",
+    "label",
+    "placeholder"
+  ],
+  "author": "Marko Fajler",
+  "license": "ISC"
+}
