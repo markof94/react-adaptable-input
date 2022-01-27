@@ -3,12 +3,44 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import isStringEmpty from '../util/isStringEmpty';
 
+interface ComponentProps {
+  value: string,
+  onChange: any,
+  placeholder?: string,
+  persistentLabel?: string,
+  maxLength?: number,
+  errorLabel?: string,
+  borderRadius?: number,
+}
+
+interface InputProps {
+  isInvalid: boolean | string,
+  isFocused: boolean,
+  borderRadius: number,
+  hasPersistentLabel: boolean,
+  hasPlaceholder: boolean,
+  hasText: boolean,
+};
+
+interface PersistentLabelProps {
+  isInvalid: boolean | string,
+  isFocused: boolean,
+  hasPlaceholder: boolean,
+  hasText: boolean,
+};
+
+interface CharacterCounterProps {
+  isInvalid: boolean | string,
+  isVisible: boolean,
+};
+
 const Container = styled.div`
   position: relative;
   width: 100%;
+  box-sizing: border-box;
 `;
 
-const Input = styled.input`
+const Input = styled.input<InputProps>`
   position: relative;
   outline: none;
   width: 100%;
@@ -27,29 +59,30 @@ const Input = styled.input`
   padding-top: 28px;
   background: transparent;
   transition: all 0.2s ease;
+  font-family: inherit;
 
   &::placeholder{
     color: #999999;
   }
 
-  ${({ invalid }) => invalid && `
-      border-color: #F44336;
+  ${({ isInvalid }) => isInvalid && `
+    border-color: #F44336;
   `}
 
-  ${({ $isfocused }) => $isfocused && `
+  ${({ isFocused }) => isFocused && `
     border-color: #007AFF;
   `}
 
-  ${({ borderradius }) => borderradius && `
-    border-radius: ${borderradius}px;
+  ${({ borderRadius }) => borderRadius && `
+    border-radius: ${borderRadius}px;
   `}
 
-  ${({ $hastext, $hasplaceholder, $haspersistentlabel }) => {
+  ${({ hasText, hasPlaceholder, hasPersistentLabel }) => {
     if (
-      ($haspersistentlabel && !$hasplaceholder && !$hastext) ||
-      (!$haspersistentlabel && $hasplaceholder && $hastext) ||
-      (!$haspersistentlabel && !$hasplaceholder) ||
-      (!$haspersistentlabel && !$hastext)
+      (hasPersistentLabel && !hasPlaceholder && !hasText) ||
+      (!hasPersistentLabel && hasPlaceholder && hasText) ||
+      (!hasPersistentLabel && !hasPlaceholder) ||
+      (!hasPersistentLabel && !hasText)
     ) {
       return 'padding-top: 12px;';
     }
@@ -58,7 +91,7 @@ const Input = styled.input`
   }}
 `;
 
-const PersistentLabel = styled.div`
+const PersistentLabel = styled.div<PersistentLabelProps>`
   position: absolute;
   width: calc(100% - 20px);
   left: 1px;
@@ -102,7 +135,7 @@ const PersistentLabel = styled.div`
   `}
 `;
 
-const CharacterCounter = styled.div`
+const CharacterCounter = styled.div<CharacterCounterProps>`
     position: absolute;
     top: calc(100% + 2px);
     right: 13px;
@@ -134,7 +167,7 @@ const InputError = styled.div`
   margin-left: 13px;
 `;
 
-const TextInput = (props) => {
+const TextInput = (props: ComponentProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const {
@@ -145,32 +178,28 @@ const TextInput = (props) => {
     maxLength,
     errorLabel,
     borderRadius = 10,
-    type,
   } = props;
 
   const isExceedingMaxLength = maxLength ? value.length > maxLength : false;
-  const isInvalid = errorLabel && errorLabel !== '';
+  const isInvalid = !isStringEmpty(errorLabel);
   const hasPersistentLabel = !isStringEmpty(persistentLabel);
   const hasPlaceholder = !isStringEmpty(placeholder);
 
   return (
-    <Container
-      isInvalid={isInvalid}
-    >
+    <Container>
       <Input
         value={value}
         onChange={onChange}
         placeholder={placeholder}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        invalid={(isExceedingMaxLength || isInvalid)}
-        $isfocused={isFocused}
-        borderradius={borderRadius}
-        $hastext={value !== ''}
-        type={type}
+        isInvalid={(isExceedingMaxLength || isInvalid)}
+        isFocused={isFocused}
+        borderRadius={borderRadius}
+        hasText={value !== ''}
         autoCapitalize="none"
-        $haspersistentlabel={hasPersistentLabel}
-        $hasplaceholder={hasPlaceholder}
+        hasPersistentLabel={hasPersistentLabel}
+        hasPlaceholder={hasPlaceholder}
         maxLength={maxLength}
       />
       {

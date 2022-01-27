@@ -1,7 +1,7 @@
-import TextInput from './components/TextInput';
 import Textarea from './components/Textarea';
+import TextInput from './components/TextInput';
 
 export {
-  TextInput,
   Textarea,
+  TextInput,
 };
