@@ -11,6 +11,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
+var _TextareaAutosize = _interopRequireDefault(require("@mui/base/TextareaAutosize"));
+
 var _isStringEmpty = _interopRequireDefault(require("../util/isStringEmpty"));
 
 var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5;
@@ -27,9 +29,9 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 ;
 ;
 
-const Container = _styledComponents.default.div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: relative;\n  width: 100%;\n"])));
+const Container = _styledComponents.default.div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: relative;\n  width: 100%;\n  box-sizing: border-box;\n"])));
 
-const Input = _styledComponents.default.textarea(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  position: relative;\n  outline: none;\n  width: 100%;\n  height: 50px;\n  resize: none;\n  border: 1px solid #999999;\n  border-radius: 10px;\n  font-style: normal;\n  font-weight: normal;\n  font-size: 17px;\n  line-height: 21px;\n  letter-spacing: -0.41px;\n  color: #000000;\n  padding: 12px;\n  padding-left: 14px;\n  background: transparent;\n\n  &::placeholder{\n    color: #999999;\n  }\n\n  ", "\n\n  ", "\n\n  ", "\n\n  ", "\n\n  ", "\n"])), _ref => {
+const Input = (0, _styledComponents.default)(_TextareaAutosize.default)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  position: relative;\n  outline: none;\n  width: 100%;\n  height: 50px;\n  min-height: 50px;\n  border: 1px solid #999999;\n  border-radius: 10px;\n  font-style: normal;\n  font-weight: normal;\n  font-size: 17px;\n  line-height: 21px;\n  letter-spacing: -0.41px;\n  color: #000000;\n  padding: 12px;\n  padding-left: 14px;\n  background: transparent;\n  font-family: inherit;\n  resize: none;\n\n  &::placeholder{\n    color: #999999;\n  }\n\n  ", "\n\n  ", "\n\n  ", "\n\n  ", "\n\n  ", "\n"])), _ref => {
   let {
     isInvalid
   } = _ref;

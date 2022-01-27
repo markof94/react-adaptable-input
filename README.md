@@ -1,4 +1,14 @@
-# simple-component-library
-A library of React components created using `create-react-app`.## Installation
-Run the following command:
-`npm install simple-component-library`
+# React Adaptable Inputs
+
+A couple of Input components with some additional functionality:
+
+- Persistent label
+- Character Counter with character limits
+- Focused state colors
+- Error state colors and labels
+
+# Installation
+
+`npm install react-adaptable-components`
+
+More docs coming soon!
